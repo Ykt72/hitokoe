@@ -6,13 +6,26 @@ import { RecordsScreen } from './screens/RecordsScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { TimerScreen } from './screens/TimerScreen';
 import type { RecordItem, Screen } from './types';
-import { loadState, saveState } from './utils/storage';
+import { loadServerState, loadState, mergeStates, saveServerState, saveState } from './utils/storage';
 
 export function App(){
   const[state,setState]=useState(loadState);
+  const[serverReady,setServerReady]=useState(false);
   const[screen,setScreen]=useState<Screen>('home');
   const[completed,setCompleted]=useState<RecordItem|null>(null);
-  useEffect(()=>saveState(state),[state]);
+
+  useEffect(()=>{
+    loadServerState().then(remote=>{
+      if(remote)setState(local=>mergeStates(local,remote));
+      setServerReady(true);
+    });
+  },[]);
+
+  useEffect(()=>{
+    saveState(state);
+    if(serverReady)saveServerState(state);
+  },[state,serverReady]);
+
   const done=(record:RecordItem)=>{setCompleted(record);setScreen('complete')};
 
   return <div className="stage"><div className="phone">

@@ -11,10 +11,6 @@ if (Test-Path ".git" -PathType Container) {
   $gitItems = Get-ChildItem -Force ".git" -Recurse -ErrorAction SilentlyContinue
   if (($gitItems | Measure-Object).Count -eq 0) {
     Remove-Item -LiteralPath ".git" -Force
-  } else {
-    Write-Host ".git already exists. Please check the current repository state."
-    & $git status --short --branch
-    exit 1
   }
 }
 
