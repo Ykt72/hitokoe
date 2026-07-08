@@ -1,0 +1,17 @@
+{
+  "name": "ひとこえ",
+  "short_name": "ひとこえ",
+  "description": "開くだけで今日の運動を提案し、準備なしですぐ始められる運動サポートWebアプリです。",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#20a63a",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./exercises/stretch.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -46,6 +46,31 @@ npm run app
 
 表示されたURL（通常は http://localhost:4173）をブラウザで開きます。
 
+同じサーバがすでに起動している場合は、二重起動せずに既存のURLを表示して終了します。
+4173番ポートを別のアプリが使っている場合は、4174番以降の空いているポートを自動で探します。
+
+## Web公開
+
+GitHub Pagesで公開するためのGitHub Actionsを追加しています。
+
+GitHubにpushしたあと、リポジトリの `Settings` → `Pages` で、公開元を `GitHub Actions` に設定します。
+設定後、`main` ブランチへpushすると自動でビルドされ、以下のURLで公開されます。
+
+```text
+https://ykt72.github.io/hitokoe/
+```
+
+GitHub Pages版は静的サイトとして公開されます。
+サーバ保存APIは使えないため、履歴はブラウザの `localStorage` に保存されます。
+
+検索に出やすくするため、`description`、OGP、`robots.txt`、`sitemap.xml` を追加しています。
+検索結果に表示されるまでには時間がかかる場合があります。
+早めに登録したい場合は、Google Search Consoleで以下のURLを登録します。
+
+```text
+https://ykt72.github.io/hitokoe/
+```
+
 ## ビルド確認
 
 ```powershell

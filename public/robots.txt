@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ykt72.github.io/hitokoe/sitemap.xml
