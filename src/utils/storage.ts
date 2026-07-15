@@ -1,8 +1,8 @@
 import type { BackgroundColor, BackgroundPattern, BackgroundPatternColor, RecordItem, State } from '../types';
 
 const KEY='hitokoe-state-v2';
-const backgroundPatterns:BackgroundPattern[]=['plain','dots','leaf','wave'];
-const backgroundColors:BackgroundColor[]=['white','mint','cream','sky'];
+const backgroundPatterns:BackgroundPattern[]=['plain','dots','leaf','wave','grid','diagonal','ring'];
+const backgroundColors:BackgroundColor[]=['white','mint','sky','lavender','navy','cream','peach','coral','mocha'];
 const backgroundPatternColors:BackgroundPatternColor[]=['mint','sky','lavender','navy','cream','peach','coral','mocha'];
 
 const isBackgroundPattern=(value:unknown):value is BackgroundPattern=>
@@ -89,6 +89,6 @@ export async function saveServerState(state:State){
       body:JSON.stringify({...state,timer:null})
     });
   }catch{
-    // サーバーがない環境ではlocalStorageだけで動かします。
+    // サーバーが使えない環境ではlocalStorageだけで動かします。
   }
 }

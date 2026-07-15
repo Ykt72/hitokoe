@@ -159,6 +159,21 @@ button{cursor:pointer}
 .setting-row>div{display:grid;gap:3px}
 .setting-row strong{font-size:14px}
 .setting-row span{font-size:10px;color:#7a847d}
+.setting-panel-toggle{
+  width:100%;
+  border:0;
+  border-top:1px solid var(--line-soft);
+  background:var(--surface);
+  color:var(--text);
+  text-align:left;
+}
+.setting-panel-toggle>svg:last-child{
+  justify-self:end;
+  transition:transform .2s ease;
+}
+.setting-panel-toggle.open>svg:last-child{
+  transform:rotate(180deg);
+}
 .disabled{opacity:.55}
 .toggle{appearance:none;width:42px;height:24px;background:#ccd3ce;border-radius:12px;position:relative}
 .toggle:before{content:'';position:absolute;width:20px;height:20px;left:2px;top:2px;border-radius:50%;background:#fff;box-shadow:0 1px 4px #0003;transition:.2s}
@@ -361,6 +376,22 @@ button{cursor:pointer}
     radial-gradient(ellipse at bottom,var(--pattern-soft) 0 26%,transparent 28%);
   background-size:86px 52px;
 }
+.pattern-preview-grid .pattern-preview,
+.pattern-grid .screen{
+  background-image:
+    linear-gradient(var(--pattern-soft) 1px,transparent 1px),
+    linear-gradient(90deg,var(--pattern-strong) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+.pattern-preview-diagonal .pattern-preview,
+.pattern-diagonal .screen{
+  background-image:repeating-linear-gradient(135deg,var(--pattern-soft) 0 2px,transparent 2px 18px);
+}
+.pattern-preview-ring .pattern-preview,
+.pattern-ring .screen{
+  background-image:radial-gradient(circle,var(--pattern-strong) 0 2px,transparent 3px 100%);
+  background-size:34px 34px;
+}
 .stage.dark-theme .pattern-option.active{
   border-color:#35c970;
   box-shadow:0 0 0 3px #173522;
@@ -381,6 +412,20 @@ button{cursor:pointer}
     radial-gradient(ellipse at top,var(--pattern-strong) 0 28%,transparent 30%),
     radial-gradient(ellipse at bottom,var(--pattern-soft) 0 26%,transparent 28%);
 }
+.stage.dark-theme .pattern-grid .screen,
+.stage.dark-theme.pattern-grid .screen{
+  background-image:
+    linear-gradient(var(--pattern-soft) 1px,transparent 1px),
+    linear-gradient(90deg,var(--pattern-strong) 1px,transparent 1px);
+}
+.stage.dark-theme .pattern-diagonal .screen,
+.stage.dark-theme.pattern-diagonal .screen{
+  background-image:repeating-linear-gradient(135deg,var(--pattern-soft) 0 2px,transparent 2px 18px);
+}
+.stage.dark-theme .pattern-ring .screen,
+.stage.dark-theme.pattern-ring .screen{
+  background-image:radial-gradient(circle,var(--pattern-strong) 0 2px,transparent 3px 100%);
+}
 
 /* 背景色は画面の地色だけに反映し、ボタンやアクセント色は緑ベースのまま保ちます。 */
 .bg-white{
@@ -395,6 +440,21 @@ button{cursor:pointer}
 .bg-sky{
   --screen-bg:#f3f9ff;
 }
+.bg-lavender{
+  --screen-bg:#f8f5ff;
+}
+.bg-navy{
+  --screen-bg:#f4f7fc;
+}
+.bg-peach{
+  --screen-bg:#fff5f0;
+}
+.bg-coral{
+  --screen-bg:#fff3f1;
+}
+.bg-mocha{
+  --screen-bg:#f7f0ea;
+}
 .stage.dark-theme{
   --screen-bg:#15191f;
 }
@@ -406,6 +466,21 @@ button{cursor:pointer}
 }
 .stage.dark-theme.bg-sky{
   --screen-bg:#131d25;
+}
+.stage.dark-theme.bg-lavender{
+  --screen-bg:#1b1726;
+}
+.stage.dark-theme.bg-navy{
+  --screen-bg:#111827;
+}
+.stage.dark-theme.bg-peach{
+  --screen-bg:#241812;
+}
+.stage.dark-theme.bg-coral{
+  --screen-bg:#251614;
+}
+.stage.dark-theme.bg-mocha{
+  --screen-bg:#211a15;
 }
 .screen{
   background-color:var(--screen-bg,var(--surface));
@@ -432,6 +507,7 @@ button{cursor:pointer}
 }
 .background-options{
   display:grid;
+  grid-template-columns:1fr 1fr;
   gap:9px;
   padding:0 15px 15px 51px;
 }
@@ -464,6 +540,11 @@ button{cursor:pointer}
 .bg-preview-mint .background-preview{background:#f4fbf5}
 .bg-preview-cream .background-preview{background:#fffaf0}
 .bg-preview-sky .background-preview{background:#f3f9ff}
+.bg-preview-lavender .background-preview{background:#f8f5ff}
+.bg-preview-navy .background-preview{background:#dfe8f7}
+.bg-preview-peach .background-preview{background:#fff5f0}
+.bg-preview-coral .background-preview{background:#fff3f1}
+.bg-preview-mocha .background-preview{background:#f7f0ea}
 .background-option strong{
   font-size:13px;
 }

@@ -1,21 +1,22 @@
-import { Info, Moon, Palette } from 'lucide-react';
+import { ChevronDown, Info, Moon, Palette } from 'lucide-react';
+import { useState } from 'react';
+import type { ReactNode } from 'react';
 import type { BackgroundColor, BackgroundPattern, BackgroundPatternColor, SetState, State } from '../types';
+
+type PanelKey='background'|'pattern'|'patternColor';
+type ColorOption={id:BackgroundPatternColor;label:string;description:string;group:'寒色'|'暖色'};
 
 const patternOptions:{id:BackgroundPattern;label:string;description:string}[]=[
   {id:'plain',label:'なし',description:'白を基調にしたシンプルな背景'},
   {id:'dots',label:'ドット',description:'小さな点で軽いリズムを出します'},
   {id:'leaf',label:'リーフ',description:'やさしい葉のような図柄を入れます'},
-  {id:'wave',label:'ウェーブ',description:'ゆるい波の図柄でやわらかく見せます'}
+  {id:'wave',label:'ウェーブ',description:'ゆるい波の図柄でやわらかく見せます'},
+  {id:'grid',label:'グリッド',description:'整った線で少しすっきり見せます'},
+  {id:'diagonal',label:'斜めライン',description:'細いラインで軽く動きを出します'},
+  {id:'ring',label:'リング',description:'丸い図柄でやわらかい印象にします'}
 ];
 
-const backgroundColorOptions:{id:BackgroundColor;label:string;description:string}[]=[
-  {id:'white',label:'白',description:'すっきり見える標準の背景'},
-  {id:'mint',label:'ミント',description:'緑になじむやさしい背景'},
-  {id:'cream',label:'クリーム',description:'少しあたたかい印象の背景'},
-  {id:'sky',label:'スカイ',description:'軽くさわやかな印象の背景'}
-];
-
-const patternColorOptions:{id:BackgroundPatternColor;label:string;description:string;group:'寒色'|'暖色'}[]=[
+const sharedColorOptions:ColorOption[]=[
   {id:'mint',label:'ミント',description:'やさしい緑',group:'寒色'},
   {id:'sky',label:'スカイ',description:'淡い青',group:'寒色'},
   {id:'lavender',label:'ラベンダー',description:'落ち着いた紫',group:'寒色'},
@@ -26,7 +27,50 @@ const patternColorOptions:{id:BackgroundPatternColor;label:string;description:st
   {id:'mocha',label:'モカ',description:'落ち着いた茶',group:'暖色'}
 ];
 
+const backgroundColorOptions:{id:BackgroundColor;label:string;description:string;group:'標準'|'寒色'|'暖色'}[]=[
+  {id:'white',label:'白',description:'すっきり見える標準の背景',group:'標準'},
+  ...sharedColorOptions
+];
+
+function SettingPanel({
+  id,
+  title,
+  description,
+  open,
+  onToggle,
+  children
+}:{
+  id:PanelKey;
+  title:string;
+  description:string;
+  open:boolean;
+  onToggle:(id:PanelKey)=>void;
+  children:ReactNode;
+}){
+  return <>
+    <button className={`setting-row setting-panel-toggle ${open?'open':''}`} onClick={()=>onToggle(id)} aria-expanded={open}>
+      <Palette/>
+      <div>
+        <strong>{title}</strong>
+        <span>{description}</span>
+      </div>
+      <ChevronDown/>
+    </button>
+    {open&&children}
+  </>;
+}
+
 export function SettingsScreen({state,setState}:{state:State;setState:SetState}){
+  const[openPanels,setOpenPanels]=useState<Record<PanelKey,boolean>>({
+    background:false,
+    pattern:false,
+    patternColor:false
+  });
+
+  const togglePanel=(id:PanelKey)=>{
+    setOpenPanels(current=>({...current,[id]:!current[id]}));
+  };
+
   return <main className="screen settings-screen">
     <header><span>使いやすく調整</span><h1>設定</h1></header>
 
@@ -44,71 +88,74 @@ export function SettingsScreen({state,setState}:{state:State;setState:SetState})
         />
       </label>
 
-      <div className="setting-row pattern-setting">
-        <Palette/>
-        <div>
-          <strong>背景色</strong>
-          <span>背景の地色だけを変更できます</span>
+      <SettingPanel
+        id="background"
+        title="背景色"
+        description="画面の地色を変更できます"
+        open={openPanels.background}
+        onToggle={togglePanel}
+      >
+        <div className="background-options" aria-label="背景色">
+          {backgroundColorOptions.map(option=>
+            <button
+              key={option.id}
+              className={`background-option bg-preview-${option.id} ${state.backgroundColor===option.id?'active':''}`}
+              onClick={()=>setState(current=>({...current,backgroundColor:option.id}))}
+              aria-label={`${option.label}に変更`}
+            >
+              <span className="background-preview"/>
+              <strong>{option.label}</strong>
+              <small>{option.group}・{option.description}</small>
+            </button>
+          )}
         </div>
-      </div>
-      <div className="background-options" aria-label="背景色">
-        {backgroundColorOptions.map(option=>
-          <button
-            key={option.id}
-            className={`background-option bg-preview-${option.id} ${state.backgroundColor===option.id?'active':''}`}
-            onClick={()=>setState(current=>({...current,backgroundColor:option.id}))}
-            aria-label={`${option.label}に変更`}
-          >
-            <span className="background-preview"/>
-            <strong>{option.label}</strong>
-            <small>{option.description}</small>
-          </button>
-        )}
-      </div>
+      </SettingPanel>
 
-      <div className="setting-row pattern-setting">
-        <Palette/>
-        <div>
-          <strong>背景パターン</strong>
-          <span>背景に表示する図柄を変更できます</span>
+      <SettingPanel
+        id="pattern"
+        title="背景パターン"
+        description="背景に表示する図柄を変更できます"
+        open={openPanels.pattern}
+        onToggle={togglePanel}
+      >
+        <div className="pattern-options" aria-label="背景パターン">
+          {patternOptions.map(option=>
+            <button
+              key={option.id}
+              className={`pattern-option pattern-preview-${option.id} ${state.backgroundPattern===option.id?'active':''}`}
+              onClick={()=>setState(current=>({...current,backgroundPattern:option.id}))}
+              aria-label={`${option.label}に変更`}
+            >
+              <span className="pattern-preview"/>
+              <strong>{option.label}</strong>
+              <small>{option.description}</small>
+            </button>
+          )}
         </div>
-      </div>
-      <div className="pattern-options" aria-label="背景パターン">
-        {patternOptions.map(option=>
-          <button
-            key={option.id}
-            className={`pattern-option pattern-preview-${option.id} ${state.backgroundPattern===option.id?'active':''}`}
-            onClick={()=>setState(current=>({...current,backgroundPattern:option.id}))}
-            aria-label={`${option.label}に変更`}
-          >
-            <span className="pattern-preview"/>
-            <strong>{option.label}</strong>
-            <small>{option.description}</small>
-          </button>
-        )}
-      </div>
+      </SettingPanel>
 
-      <div className="setting-row pattern-setting">
-        <Palette/>
-        <div>
-          <strong>背景パターン色</strong>
-          <span>ドットや図柄に使う色を変更できます</span>
+      <SettingPanel
+        id="patternColor"
+        title="背景パターン色"
+        description="ドットや図柄に使う色を変更できます"
+        open={openPanels.patternColor}
+        onToggle={togglePanel}
+      >
+        <div className="pattern-color-options" aria-label="背景パターン色">
+          {sharedColorOptions.map(option=>
+            <button
+              key={option.id}
+              className={`pattern-color-option pattern-color-preview-${option.id} ${state.backgroundPatternColor===option.id?'active':''}`}
+              onClick={()=>setState(current=>({...current,backgroundPatternColor:option.id}))}
+              aria-label={`${option.label}に変更`}
+            >
+              <span className="pattern-color-preview"/>
+              <strong>{option.label}</strong>
+              <small>{option.group}・{option.description}</small>
+            </button>
+          )}
         </div>
-      </div>
-      <div className="pattern-color-options" aria-label="背景パターン色">
-        {patternColorOptions.map(option=>
-          <button
-            key={option.id}
-            className={`pattern-color-option pattern-color-preview-${option.id} ${state.backgroundPatternColor===option.id?'active':''}`}
-            onClick={()=>setState(current=>({...current,backgroundPatternColor:option.id}))}
-            aria-label={`${option.label}に変更`}
-          >
-            <span className="pattern-color-preview"/>
-            <strong>{option.label}</strong>
-            <small>{option.group}・{option.description}</small>
-          </button>
-        )}
-      </div>
+      </SettingPanel>
     </section>
 
     <section className="settings-group">
