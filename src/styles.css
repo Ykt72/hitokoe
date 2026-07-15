@@ -20,9 +20,9 @@ html{min-height:100%;background:#f3f5f3}
 body{margin:0;min-width:320px;min-height:100%;background:#f3f5f3}
 button,input{font:inherit}
 button{cursor:pointer}
-.stage{min-height:100vh;display:flex;justify-content:center;background:#f3f5f3}
-.phone{position:relative;width:min(100%,430px);min-height:100vh;background:#fff;box-shadow:0 0 30px #16201914;overflow:hidden}
-.screen{min-height:100vh;padding:22px 20px calc(104px + env(safe-area-inset-bottom)) ;background:#fff}
+.stage{min-height:100vh;min-height:100dvh;display:flex;justify-content:center;background:#f3f5f3}
+.phone{position:relative;width:min(100%,430px);min-height:100vh;min-height:100dvh;background:#fff;box-shadow:0 0 30px #16201914;overflow:hidden}
+.screen{min-height:100vh;min-height:100dvh;padding:22px 20px calc(104px + env(safe-area-inset-bottom)) ;background:#fff}
 .screen header>span,.overline{font-size:12px;font-weight:700;color:#729078}
 .screen header h1{font-size:27px;margin:5px 0 28px;letter-spacing:0}
 .screen h2{font-size:17px;margin:24px 0 12px;letter-spacing:0}
@@ -165,11 +165,26 @@ button{cursor:pointer}
 .incomplete-screen>span{color:#a25b50}
 @media(max-width:430px){
   .phone{box-shadow:none}
-  .screen{padding:18px 18px calc(104px + env(safe-area-inset-bottom))}
+  .screen{padding:10px 18px calc(96px + env(safe-area-inset-bottom))}
+  .screen header>span{font-size:11px}
+  .screen header h1{font-size:24px;line-height:1.22;margin:2px 0 20px}
+  .screen h2{font-size:16px;margin:18px 0 10px}
+  .goal-card{padding:12px}
+  .section-heading span{margin-bottom:10px}
+  .timer-screen{padding-top:28px}
+  .timer-screen h1{font-size:23px;margin-bottom:22px}
+  .complete-screen{padding-top:44px}
 }
 @media(min-width:431px){
   .phone{margin:24px 0;min-height:calc(100vh - 48px);border-radius:22px}
   .screen{min-height:calc(100vh - 48px)}
+}
+@media(max-width:430px) and (max-height:740px){
+  .screen{padding-top:8px}
+  .screen header h1{font-size:23px;margin-bottom:16px}
+  .exercise-list{gap:10px}
+  .exercise-card{min-height:124px;padding:10px}
+  .refresh{margin-top:16px}
 }
 
 /* 設定画面のテーマ変更を、既存デザイン全体へ自然に反映します。 */
