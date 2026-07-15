@@ -507,3 +507,32 @@ button{cursor:pointer}
 .stage.dark-theme .record-icon{
   background:#323a44;
 }
+.stage.dark-theme .trophy{
+  background:#2fb866;
+  color:#08130c;
+}
+.stage.dark-theme .linear{
+  background:#313b35;
+}
+.stage.dark-theme .linear i{
+  background:#35c970;
+}
+.stage.dark-theme .goal-card>b{
+  color:#6ee79a;
+}
+.stage.dark-theme .timer-ring,
+.stage.dark-theme .small-ring{
+  background:conic-gradient(#35c970 var(--progress),#313b35 0);
+}
+.stage.dark-theme .small-ring strong{
+  color:#6ee79a;
+}
+.stage.dark-theme .summary svg{
+  color:#6ee79a;
+}
+.stage.dark-theme .complete-check{
+  color:#6ee79a;
+}
+.stage.dark-theme .record-icon{
+  color:#6ee79a;
+}
