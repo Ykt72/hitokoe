@@ -2,6 +2,17 @@
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;
   color:#161b18;
   background:#f3f5f3;
+  --page-bg:#f3f5f3;
+  --surface:#fff;
+  --surface-soft:#f7faf7;
+  --text:#161b18;
+  --muted:#718078;
+  --line:#dde5de;
+  --line-soft:#e7ebe8;
+  --accent:#22a73b;
+  --accent-strong:#188f30;
+  --accent-soft:#e7f8e9;
+  --shadow:#263b2b0c;
   font-synthesis:none;
 }
 *{box-sizing:border-box}
@@ -159,4 +170,117 @@ button{cursor:pointer}
 @media(min-width:431px){
   .phone{margin:24px 0;min-height:calc(100vh - 48px);border-radius:22px}
   .screen{min-height:calc(100vh - 48px)}
+}
+
+/* 設定画面のテーマ変更を、既存デザイン全体へ自然に反映します。 */
+.stage{
+  background:var(--page-bg);
+}
+.stage.dark-theme{
+  --page-bg:#101511;
+  --surface:#171d19;
+  --surface-soft:#202821;
+  --text:#f2f6f2;
+  --muted:#aeb9b0;
+  --line:#354139;
+  --line-soft:#2a342d;
+  --shadow:#0007;
+}
+.stage.dark-theme .exercise-card.low,
+.stage.dark-theme .exercise-card.medium,
+.stage.dark-theme .exercise-card.high{
+  background:var(--surface);
+  border-color:var(--line);
+}
+.stage.dark-theme .exercise-visual.low,
+.stage.dark-theme .exercise-visual.medium,
+.stage.dark-theme .exercise-visual.high{
+  background:var(--surface-soft);
+}
+.phone,.screen{
+  background:var(--surface);
+  color:var(--text);
+}
+.phone{
+  box-shadow:0 0 30px var(--shadow);
+}
+.screen header>span,.overline,.goal-card span,.section-heading span,.meta,.modal>span,.timer-ring span,.timer-ring small,.live-stats span,.complete-screen>p,.result-card span,.week-card span,.summary span,.activity-summary span,.record-list>p,.record-list article span,.record-list time,.settings-group h2,.setting-row span{
+  color:var(--muted);
+}
+.goal-card,.exercise-card,.week-card,.summary,.settings-group,.result-card,.live-stats,.record-list article{
+  background:var(--surface);
+  border-color:var(--line);
+  box-shadow:0 5px 14px var(--shadow);
+}
+.trophy,.linear i,.exercise-info button,.primary,.toggle:checked{
+  background:var(--accent);
+}
+.goal-card>b,.bottom-nav button.active,.complete-screen>span,.complete-check,.small-ring strong,.summary svg,.record-icon,.setting-row>svg{
+  color:var(--accent);
+}
+.refresh,.outline{
+  border-color:var(--accent);
+  color:var(--accent-strong);
+  background:var(--surface);
+}
+.toast{
+  background:var(--accent-strong);
+}
+.bottom-nav{
+  background:color-mix(in srgb,var(--surface) 92%,transparent);
+  border-top-color:var(--line-soft);
+}
+.bottom-nav button{
+  color:var(--muted);
+}
+.modal,.timer-ring>div{
+  background:var(--surface);
+}
+.modal-guide,.guide,.settings-group h2,.activity-summary>div{
+  background:var(--surface-soft);
+  border-color:var(--line);
+  color:var(--text);
+}
+.modal input{
+  accent-color:var(--accent);
+}
+.timer-ring,.small-ring{
+  background:conic-gradient(var(--accent) var(--progress),var(--line-soft) 0);
+}
+.live-stats>div+div,.result-card>div+div,.summary>div+div,.setting-row+.setting-row{
+  border-color:var(--line-soft);
+}
+.danger{
+  background:var(--surface);
+}
+.complete-check,.record-icon,.record-result .done{
+  background:var(--accent-soft);
+}
+.small-ring:before{
+  background:var(--surface);
+}
+.text-button{
+  color:var(--accent-strong);
+}
+.activity-summary strong{
+  color:var(--text);
+}
+.color-setting{
+  grid-template-columns:26px 1fr auto;
+}
+.color-options{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.color-swatch{
+  width:28px;
+  height:28px;
+  border:2px solid transparent;
+  border-radius:50%;
+  box-shadow:inset 0 0 0 1px #0002,0 2px 6px #0001;
+}
+.color-swatch.active{
+  border-color:var(--text);
+  box-shadow:0 0 0 3px var(--accent-soft),inset 0 0 0 1px #0002;
 }

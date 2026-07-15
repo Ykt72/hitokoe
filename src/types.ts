@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from 'react';
 export type Level='low'|'medium'|'high';
 export type Tab='home'|'records'|'settings';
 export type Screen=Tab|'timer'|'complete';
+export type ThemeColor='green'|'blue'|'orange'|'pink';
 
 export type Exercise={
   id:string;
@@ -34,7 +35,8 @@ export type RecordItem={
 export type State={
   records:RecordItem[];
   timer:Timer|null;
-  notifications:boolean;
+  darkMode:boolean;
+  themeColor:ThemeColor;
   proposedExerciseIds:string[];
 };
 

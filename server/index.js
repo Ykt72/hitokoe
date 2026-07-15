@@ -11,7 +11,8 @@ const statePath = join(dataDir, 'hitokoe-state.json');
 const serverTagPath = join(dataDir, 'hitokoe-server.json');
 const preferredPort = Number(process.env.PORT || 4173);
 
-const defaultState = { records: [], timer: null, notifications: true, proposedExerciseIds: [] };
+const themeColors = ['green', 'blue', 'orange', 'pink'];
+const defaultState = { records: [], timer: null, darkMode: false, themeColor: 'green', proposedExerciseIds: [] };
 const mime = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
@@ -40,9 +41,10 @@ async function readState() {
 async function writeState(state) {
   await mkdir(dataDir, { recursive: true });
   const records = Array.isArray(state.records) ? state.records : [];
-  const notifications = typeof state.notifications === 'boolean' ? state.notifications : true;
+  const darkMode = typeof state.darkMode === 'boolean' ? state.darkMode : false;
+  const themeColor = themeColors.includes(state.themeColor) ? state.themeColor : 'green';
   const proposedExerciseIds = Array.isArray(state.proposedExerciseIds) ? state.proposedExerciseIds : [];
-  await writeFile(statePath, JSON.stringify({ records, timer: null, notifications, proposedExerciseIds }, null, 2));
+  await writeFile(statePath, JSON.stringify({ records, timer: null, darkMode, themeColor, proposedExerciseIds }, null, 2));
 }
 
 async function writeServerTag(port) {

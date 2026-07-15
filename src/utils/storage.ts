@@ -1,19 +1,37 @@
-import type { RecordItem, State } from '../types';
+import type { RecordItem, State, ThemeColor } from '../types';
 
 const KEY='hitokoe-state-v2';
-export const initialState:State={records:[],timer:null,notifications:true,proposedExerciseIds:[]};
+const themeColors:ThemeColor[]=['green','blue','orange','pink'];
+const isThemeColor=(value:unknown):value is ThemeColor=>themeColors.includes(value as ThemeColor);
+
+export const initialState:State={
+  records:[],
+  timer:null,
+  darkMode:false,
+  themeColor:'green',
+  proposedExerciseIds:[]
+};
+
+function normalizeState(state:Partial<State>|null|undefined):State{
+  const source=state||{};
+  const timer=source.timer||null;
+  if(timer?.status==='running'&&timer.endsAt){
+    timer.remainingSeconds=Math.max(0,Math.ceil((timer.endsAt-Date.now())/1000));
+    if(timer.remainingSeconds===0){timer.status='paused';timer.endsAt=null}
+  }
+  return {
+    records:(source.records||[]).map((r:RecordItem)=>({...r,status:r.status||'completed'})),
+    timer,
+    darkMode:Boolean(source.darkMode),
+    themeColor:isThemeColor(source.themeColor)?source.themeColor:'green',
+    proposedExerciseIds:source.proposedExerciseIds||[]
+  };
+}
 
 export function loadState():State{
   try{
-    const s=JSON.parse(localStorage.getItem(KEY)||'null');
-    if(!s)return initialState;
-    s.records=(s.records||[]).map((r:RecordItem)=>({...r,status:r.status||'completed'}));
-    s.proposedExerciseIds=s.proposedExerciseIds||[];
-    if(s.timer?.status==='running'&&s.timer.endsAt){
-      s.timer.remainingSeconds=Math.max(0,Math.ceil((s.timer.endsAt-Date.now())/1000));
-      if(s.timer.remainingSeconds===0){s.timer.status='paused';s.timer.endsAt=null}
-    }
-    return s;
+    const saved=JSON.parse(localStorage.getItem(KEY)||'null');
+    return normalizeState(saved);
   }catch{
     return initialState;
   }
@@ -30,7 +48,8 @@ export function mergeStates(local:State, remote:State):State{
   return {
     records:unique,
     timer:local.timer,
-    notifications:remote.notifications ?? local.notifications,
+    darkMode:local.darkMode,
+    themeColor:local.themeColor,
     proposedExerciseIds:Array.from(new Set([...(remote.proposedExerciseIds||[]),...(local.proposedExerciseIds||[])]))
   };
 }
@@ -40,7 +59,7 @@ export async function loadServerState():Promise<State|null>{
     const response=await fetch('/api/state');
     if(!response.ok)return null;
     const state=await response.json();
-    return {...initialState,...state,records:(state.records||[]).map((r:RecordItem)=>({...r,status:r.status||'completed'})),proposedExerciseIds:state.proposedExerciseIds||[],timer:null};
+    return {...normalizeState(state),timer:null};
   }catch{
     return null;
   }
@@ -54,6 +73,6 @@ export async function saveServerState(state:State){
       body:JSON.stringify({...state,timer:null})
     });
   }catch{
-    // サーバがない開発環境ではlocalStorageだけで動かします。
+    // サーバーがない環境ではlocalStorageだけで動かします。
   }
 }
