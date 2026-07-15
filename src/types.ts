@@ -4,6 +4,7 @@ export type Level='low'|'medium'|'high';
 export type Tab='home'|'records'|'settings';
 export type Screen=Tab|'timer'|'complete';
 export type BackgroundPattern='plain'|'dots'|'leaf'|'wave';
+export type BackgroundColor='white'|'mint'|'cream'|'sky';
 
 export type Exercise={
   id:string;
@@ -37,6 +38,7 @@ export type State={
   timer:Timer|null;
   darkMode:boolean;
   backgroundPattern:BackgroundPattern;
+  backgroundColor:BackgroundColor;
   proposedExerciseIds:string[];
 };
 
