@@ -166,14 +166,16 @@ button{cursor:pointer}
 .incomplete-screen>span{color:#a25b50}
 @media(max-width:430px){
   .phone{box-shadow:none}
-  .screen{padding:10px 18px calc(96px + env(safe-area-inset-bottom))}
-  .home-screen{padding-top:8px}
-  .home-date{font-size:11px;margin-bottom:10px}
+  .screen{padding:8px 18px calc(88px + env(safe-area-inset-bottom))}
+  .home-screen{padding-top:6px}
+  .home-date{font-size:10px;margin-bottom:6px}
   .screen header>span{font-size:11px}
   .screen header h1{font-size:24px;line-height:1.22;margin:2px 0 20px}
-  .screen h2{font-size:16px;margin:18px 0 10px}
+  .screen h2{font-size:15px;margin:12px 0 8px}
   .goal-card{padding:12px}
-  .section-heading span{margin-bottom:10px}
+  .section-heading span{margin-bottom:8px}
+  .exercise-list{gap:10px}
+  .refresh{min-height:34px;margin-top:12px}
   .timer-screen{padding-top:28px}
   .timer-screen h1{font-size:23px;margin-bottom:22px}
   .complete-screen{padding-top:44px}
@@ -183,11 +185,13 @@ button{cursor:pointer}
   .screen{min-height:calc(100vh - 48px)}
 }
 @media(max-width:430px) and (max-height:740px){
-  .screen{padding-top:8px}
+  .screen{padding-top:6px}
   .screen header h1{font-size:23px;margin-bottom:16px}
-  .exercise-list{gap:10px}
-  .exercise-card{min-height:124px;padding:10px}
-  .refresh{margin-top:16px}
+  .home-date{margin-bottom:4px}
+  .screen h2{margin:10px 0 7px}
+  .goal-card{padding:11px}
+  .exercise-list{gap:9px}
+  .refresh{margin-top:10px}
 }
 
 /* 設定画面のテーマ変更を、既存デザイン全体へ自然に反映します。 */
