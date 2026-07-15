@@ -1,11 +1,11 @@
 import { Info, Moon, Palette } from 'lucide-react';
-import type { SetState, State, ThemeColor } from '../types';
+import type { BackgroundPattern, SetState, State } from '../types';
 
-const colorOptions:{id:ThemeColor;label:string;color:string}[]=[
-  {id:'green',label:'緑',color:'#22a73b'},
-  {id:'blue',label:'青',color:'#2478d4'},
-  {id:'orange',label:'橙',color:'#e9781a'},
-  {id:'pink',label:'桃',color:'#d94d83'}
+const patternOptions:{id:BackgroundPattern;label:string;description:string}[]=[
+  {id:'plain',label:'なし',description:'白を基調にしたシンプルな背景'},
+  {id:'dots',label:'ドット',description:'小さな点で軽いリズムを出します'},
+  {id:'leaf',label:'リーフ',description:'やさしい葉のような図柄を入れます'},
+  {id:'wave',label:'ウェーブ',description:'ゆるい波の図柄でやわらかく見せます'}
 ];
 
 export function SettingsScreen({state,setState}:{state:State;setState:SetState}){
@@ -26,21 +26,26 @@ export function SettingsScreen({state,setState}:{state:State;setState:SetState})
         />
       </label>
 
-      <div className="setting-row color-setting">
+      <div className="setting-row pattern-setting">
         <Palette/>
-        <div><strong>デザインカラー</strong><span>ボタンや強調色を変更できます</span></div>
-        <div className="color-options" aria-label="デザインカラー">
-          {colorOptions.map(option=>
-            <button
-              key={option.id}
-              className={`color-swatch ${state.themeColor===option.id?'active':''}`}
-              style={{background:option.color}}
-              onClick={()=>setState(current=>({...current,themeColor:option.id}))}
-              aria-label={`${option.label}に変更`}
-              title={option.label}
-            />
-          )}
+        <div>
+          <strong>背景パターン</strong>
+          <span>背景に表示する図柄を変更できます</span>
         </div>
+      </div>
+      <div className="pattern-options" aria-label="背景パターン">
+        {patternOptions.map(option=>
+          <button
+            key={option.id}
+            className={`pattern-option pattern-preview-${option.id} ${state.backgroundPattern===option.id?'active':''}`}
+            onClick={()=>setState(current=>({...current,backgroundPattern:option.id}))}
+            aria-label={`${option.label}に変更`}
+          >
+            <span className="pattern-preview"/>
+            <strong>{option.label}</strong>
+            <small>{option.description}</small>
+          </button>
+        )}
       </div>
     </section>
 
