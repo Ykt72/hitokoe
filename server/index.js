@@ -11,8 +11,8 @@ const statePath = join(dataDir, 'hitokoe-state.json');
 const serverTagPath = join(dataDir, 'hitokoe-server.json');
 const preferredPort = Number(process.env.PORT || 4173);
 
-const backgroundPatterns = ['plain', 'dots', 'leaf', 'wave'];
-const backgroundColors = ['white', 'mint', 'cream', 'sky'];
+const backgroundPatterns = ['plain', 'dots', 'leaf', 'wave', 'grid', 'diagonal', 'ring'];
+const backgroundColors = ['white', 'mint', 'sky', 'lavender', 'navy', 'cream', 'peach', 'coral', 'mocha'];
 const backgroundPatternColors = ['mint', 'sky', 'lavender', 'navy', 'cream', 'peach', 'coral', 'mocha'];
 const defaultState = { records: [], timer: null, darkMode: false, backgroundPattern: 'plain', backgroundColor: 'white', backgroundPatternColor: 'mint', proposedExerciseIds: [] };
 const mime = {
