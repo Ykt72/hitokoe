@@ -1,4 +1,4 @@
-import type { Exercise, Level } from '../types';
+import type { Exercise, Level, RecordItem } from '../types';
 
 export const labels:Record<Level,string>={low:'低',medium:'中',high:'高'};
 
@@ -23,11 +23,24 @@ export const exercises:Exercise[]=[
   {id:'high-knees',image:'/exercises/high-knees.png',name:'もも上げダッシュ',intensity:'high',baseMinutes:1,kcalPerMinute:12,description:'その場でももを高く上げ、テンポよく全身を動かします。'}
 ];
 
-export const byId=(id:string)=>exercises.find(x=>x.id===(id==='radio'?'radio-1':id))!;
+export const normalizeExerciseId=(id:string)=>id==='radio'?'radio-1':id;
+export const exerciseIds=exercises.map(exercise=>exercise.id);
+export const byId=(id:string)=>exercises.find(x=>x.id===normalizeExerciseId(id))!;
+
+export const hasExecutedAllExercises=(records:RecordItem[])=>{
+  const executed=new Set(records.map(record=>normalizeExerciseId(record.exerciseId)));
+  return exerciseIds.every(id=>executed.has(id));
+};
+
+export const proposalBlocklist=(proposedIds:string[],records:RecordItem[])=>{
+  if(hasExecutedAllExercises(records))return [];
+  return proposedIds.map(normalizeExerciseId);
+};
 
 export const propose=(old:string[]=[])=>['low','medium','high'].map(level=>{
   const all=exercises.filter(x=>x.intensity===level);
-  const fresh=all.filter(x=>!old.includes(x.id));
+  const blocked=new Set(old.map(normalizeExerciseId));
+  const fresh=all.filter(x=>!blocked.has(x.id));
   const pool=fresh.length?fresh:all;
   return pool[Math.floor(Math.random()*pool.length)];
 });

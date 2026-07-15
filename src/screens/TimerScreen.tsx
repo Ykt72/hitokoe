@@ -1,6 +1,6 @@
 import { useEffect, type CSSProperties } from 'react';
 import { Flame, Pause, Play, Square } from 'lucide-react';
-import { byId } from '../data/exercises';
+import { byId, hasExecutedAllExercises } from '../data/exercises';
 import type { RecordItem, SetState, State, Timer } from '../types';
 
 export function TimerScreen({state,setState,done}:{state:State;setState:SetState;done:(record:RecordItem)=>void}){
@@ -18,7 +18,10 @@ export function TimerScreen({state,setState,done}:{state:State;setState:SetState
       kcal:Math.round(minutes*exercise.kcalPerMinute*10)/10,
       status:completed?'completed':'incomplete'
     };
-    setState(s=>({...s,timer:null,records:[record,...s.records]}));
+    setState(s=>{
+      const records=[record,...s.records];
+      return {...s,timer:null,records,proposedExerciseIds:hasExecutedAllExercises(records)?[]:s.proposedExerciseIds};
+    });
     done(record);
   };
 

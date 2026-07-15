@@ -35,6 +35,7 @@ export type State={
   records:RecordItem[];
   timer:Timer|null;
   notifications:boolean;
+  proposedExerciseIds:string[];
 };
 
 export type SetState=Dispatch<SetStateAction<State>>;
