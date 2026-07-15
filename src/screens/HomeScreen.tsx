@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { RotateCcw, Trophy } from 'lucide-react';
 import { ExerciseCard } from '../components/ExerciseCard';
-import { proposalBlocklist, propose } from '../data/exercises';
+import { completedExerciseKinds, exerciseIds, proposalBlocklist, propose } from '../data/exercises';
 import type { Exercise, SetState, State } from '../types';
 
 export function HomeScreen({state,setState,go}:{state:State;setState:SetState;go:()=>void}){
@@ -9,8 +9,9 @@ export function HomeScreen({state,setState,go}:{state:State;setState:SetState;go
   const[selected,setSelected]=useState<Exercise|null>(null);
   const[minutes,setMinutes]=useState(1);
   const[toast,setToast]=useState(false);
-  const today=state.records.filter(r=>r.status==='completed'&&new Date(r.completedAt).toDateString()===new Date().toDateString());
-  const rate=Math.min(100,today.length*34);
+  const completedKinds=completedExerciseKinds(state.records);
+  const completedKindCount=completedKinds.size;
+  const rate=Math.round((completedKindCount/exerciseIds.length)*100);
   const open=(exercise:Exercise)=>{setSelected(exercise);setMinutes(exercise.baseMinutes)};
   const refresh=()=>{
     setItems(propose(proposalBlocklist([...state.proposedExerciseIds,...items.map(x=>x.id)],state.records)));
@@ -43,7 +44,7 @@ export function HomeScreen({state,setState,go}:{state:State;setState:SetState;go
       {toast&&<div className="toast">提案を更新しました</div>}
       <header><span>{new Intl.DateTimeFormat('ja-JP',{month:'long',day:'numeric',weekday:'short'}).format(new Date())}</span><h1>今日も、少しだけ。</h1></header>
       <h2>今日の運動</h2>
-      <section className="goal-card"><div className="trophy"><Trophy/></div><div><strong>今日の運動達成率</strong><div className="linear"><i style={{width:rate+'%'}}/></div><span>{today.length}回完了</span></div><b>{rate}%</b></section>
+      <section className="goal-card"><div className="trophy"><Trophy/></div><div><strong>18種類チャレンジ達成率</strong><div className="linear"><i style={{width:rate+'%'}}/></div><span>{completedKindCount} / {exerciseIds.length} 種類達成</span></div><b>{rate}%</b></section>
       <div className="section-heading"><h2>今日おすすめの運動</h2><span>すぐに始められます</span></div>
       <section className="exercise-list">{items.map(exercise=><ExerciseCard key={exercise.id} exercise={exercise} start={open}/>)}</section>
       <button className="refresh" onClick={refresh}><RotateCcw/>提案を更新する</button>
