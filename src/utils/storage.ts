@@ -1,15 +1,21 @@
-import type { BackgroundPattern, RecordItem, State } from '../types';
+import type { BackgroundColor, BackgroundPattern, RecordItem, State } from '../types';
 
 const KEY='hitokoe-state-v2';
 const backgroundPatterns:BackgroundPattern[]=['plain','dots','leaf','wave'];
+const backgroundColors:BackgroundColor[]=['white','mint','cream','sky'];
+
 const isBackgroundPattern=(value:unknown):value is BackgroundPattern=>
   backgroundPatterns.includes(value as BackgroundPattern);
+
+const isBackgroundColor=(value:unknown):value is BackgroundColor=>
+  backgroundColors.includes(value as BackgroundColor);
 
 export const initialState:State={
   records:[],
   timer:null,
   darkMode:false,
   backgroundPattern:'plain',
+  backgroundColor:'white',
   proposedExerciseIds:[]
 };
 
@@ -25,6 +31,7 @@ function normalizeState(state:Partial<State>|null|undefined):State{
     timer,
     darkMode:Boolean(source.darkMode),
     backgroundPattern:isBackgroundPattern(source.backgroundPattern)?source.backgroundPattern:'plain',
+    backgroundColor:isBackgroundColor(source.backgroundColor)?source.backgroundColor:'white',
     proposedExerciseIds:source.proposedExerciseIds||[]
   };
 }
@@ -51,6 +58,7 @@ export function mergeStates(local:State, remote:State):State{
     timer:local.timer,
     darkMode:local.darkMode,
     backgroundPattern:local.backgroundPattern,
+    backgroundColor:local.backgroundColor,
     proposedExerciseIds:Array.from(new Set([...(remote.proposedExerciseIds||[]),...(local.proposedExerciseIds||[])]))
   };
 }
