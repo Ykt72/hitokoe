@@ -9,14 +9,22 @@
     "build:pages": "vite build --base=/hitokoe/",
     "preview": "vite preview",
     "start": "node server/index.js",
-    "app": "npm run build && npm run start"
+    "app": "npm run build && npm run start",
+    "test": "vitest run --configLoader runner",
+    "test:watch": "vitest --configLoader runner"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^6.0.5",
+    "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "lucide-react": "^0.468.0"
+    "vite": "^6.0.5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "jsdom": "^29.1.1",
+    "vitest": "^4.1.10"
+  }
 }
