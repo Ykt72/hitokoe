@@ -42,7 +42,7 @@ export function HomeScreen({state,setState,go}:{state:State;setState:SetState;go
   return <>
     <main className="screen home-screen">
       {toast&&<div className="toast">提案を更新しました</div>}
-      <header><span>{new Intl.DateTimeFormat('ja-JP',{month:'long',day:'numeric',weekday:'short'}).format(new Date())}</span><h1>今日も、少しだけ。</h1></header>
+      <div className="home-date">{new Intl.DateTimeFormat('ja-JP',{month:'long',day:'numeric',weekday:'short'}).format(new Date())}</div>
       <h2>今日の運動</h2>
       <section className="goal-card"><div className="trophy"><Trophy/></div><div><strong>18種類チャレンジ達成率</strong><div className="linear"><i style={{width:rate+'%'}}/></div><span>{completedKindCount} / {exerciseIds.length} 種類達成</span></div><b>{rate}%</b></section>
       <div className="section-heading"><h2>今日おすすめの運動</h2><span>すぐに始められます</span></div>
