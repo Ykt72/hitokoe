@@ -199,25 +199,28 @@ button{cursor:pointer}
   background:var(--page-bg);
 }
 .stage.dark-theme{
-  --page-bg:#101511;
-  --surface:#171d19;
-  --surface-soft:#202821;
+  --page-bg:#0f1115;
+  --surface:#20242b;
+  --surface-soft:#2a3038;
   --text:#f2f6f2;
-  --muted:#aeb9b0;
-  --line:#354139;
-  --line-soft:#2a342d;
+  --muted:#c4ccd4;
+  --line:#46505c;
+  --line-soft:#37414b;
+  --accent:#e8edf2;
+  --accent-strong:#f7fafc;
+  --accent-soft:#323a44;
   --shadow:#0007;
 }
 .stage.dark-theme .exercise-card.low,
 .stage.dark-theme .exercise-card.medium,
 .stage.dark-theme .exercise-card.high{
-  background:var(--surface);
+  background:#242a31;
   border-color:var(--line);
 }
 .stage.dark-theme .exercise-visual.low,
 .stage.dark-theme .exercise-visual.medium,
 .stage.dark-theme .exercise-visual.high{
-  background:var(--surface-soft);
+  background:#171c21;
 }
 .phone,.screen{
   background:var(--surface);
@@ -244,6 +247,12 @@ button{cursor:pointer}
   border-color:var(--accent);
   color:var(--accent-strong);
   background:var(--surface);
+}
+.stage.dark-theme .refresh{
+  background:#e8edf2;
+  border-color:#e8edf2;
+  color:#111827;
+  box-shadow:0 8px 18px #0004;
 }
 .toast{
   background:var(--accent-strong);
@@ -354,19 +363,19 @@ button{cursor:pointer}
 }
 .stage.dark-theme .pattern-dots .screen,
 .stage.dark-theme.pattern-dots .screen{
-  background-image:radial-gradient(circle at 8px 8px,#26342a 1.5px,transparent 1.5px);
+  background-image:radial-gradient(circle at 8px 8px,#4b5563 1.2px,transparent 1.2px);
 }
 .stage.dark-theme .pattern-leaf .screen,
 .stage.dark-theme.pattern-leaf .screen{
   background-image:
-    radial-gradient(ellipse at 18px 10px,#202c23 0 9px,transparent 10px),
-    radial-gradient(ellipse at 34px 28px,#1d271f 0 8px,transparent 9px);
+    radial-gradient(ellipse at 18px 10px,#2f3a46 0 9px,transparent 10px),
+    radial-gradient(ellipse at 34px 28px,#26313c 0 8px,transparent 9px);
 }
 .stage.dark-theme .pattern-wave .screen,
 .stage.dark-theme.pattern-wave .screen{
   background-image:
-    radial-gradient(ellipse at top,#202b23 0 28%,transparent 30%),
-    radial-gradient(ellipse at bottom,#18221b 0 26%,transparent 28%);
+    radial-gradient(ellipse at top,#2d3742 0 28%,transparent 30%),
+    radial-gradient(ellipse at bottom,#202a34 0 26%,transparent 28%);
 }
 
 /* 背景色は画面の地色だけに反映し、ボタンやアクセント色は緑ベースのまま保ちます。 */
@@ -383,16 +392,16 @@ button{cursor:pointer}
   --screen-bg:#f3f9ff;
 }
 .stage.dark-theme{
-  --screen-bg:var(--surface);
+  --screen-bg:#15191f;
 }
 .stage.dark-theme.bg-mint{
-  --screen-bg:#162119;
+  --screen-bg:#141d19;
 }
 .stage.dark-theme.bg-cream{
-  --screen-bg:#211d15;
+  --screen-bg:#201c16;
 }
 .stage.dark-theme.bg-sky{
-  --screen-bg:#141e24;
+  --screen-bg:#131d25;
 }
 .screen{
   background-color:var(--screen-bg,var(--surface));
@@ -462,4 +471,39 @@ button{cursor:pointer}
 .stage.dark-theme .background-option.active{
   border-color:#f2f6f2;
   box-shadow:0 0 0 3px #2a342d;
+}
+.stage.dark-theme .pattern-preview,
+.stage.dark-theme .background-preview{
+  border-color:#53606d;
+}
+.stage.dark-theme .pattern-option,
+.stage.dark-theme .background-option,
+.stage.dark-theme .record-list article,
+.stage.dark-theme .activity-summary>div{
+  background:#252b33;
+  border-color:#46505c;
+}
+.stage.dark-theme .settings-group h2{
+  background:#252b33;
+}
+.stage.dark-theme .goal-card,
+.stage.dark-theme .week-card,
+.stage.dark-theme .summary,
+.stage.dark-theme .settings-group,
+.stage.dark-theme .result-card,
+.stage.dark-theme .live-stats,
+.stage.dark-theme .modal{
+  background:#20242b;
+  border-color:#46505c;
+}
+.stage.dark-theme .exercise-card.low{border-color:#416a4c}
+.stage.dark-theme .exercise-card.medium{border-color:#75622d}
+.stage.dark-theme .exercise-card.high{border-color:#7a4c34}
+.stage.dark-theme .level{color:#bce8c4;background:#1f3d28}
+.stage.dark-theme .medium .level{color:#ffe2a3;background:#4b3a15}
+.stage.dark-theme .high .level{color:#ffc2a6;background:#4d2617}
+.stage.dark-theme .record-result .done,
+.stage.dark-theme .complete-check,
+.stage.dark-theme .record-icon{
+  background:#323a44;
 }
