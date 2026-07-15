@@ -1,6 +1,6 @@
 import { useMemo, useState, type CSSProperties } from 'react';
 import { Check, ChevronRight, Flame, Square, Trophy } from 'lucide-react';
-import { byId } from '../data/exercises';
+import { byId, completedExerciseKinds, exerciseIds } from '../data/exercises';
 import type { RecordItem } from '../types';
 import { weekStart } from '../utils/date';
 
@@ -9,7 +9,8 @@ export function RecordsScreen({records}:{records:RecordItem[]}){
   const week=useMemo(()=>weekStart(),[]);
   const weekRecords=records.filter(record=>new Date(record.completedAt)>=week);
   const completedWeek=weekRecords.filter(record=>record.status==='completed');
-  const rate=Math.min(100,completedWeek.length*20);
+  const completedKinds=completedExerciseKinds(records);
+  const rate=Math.round((completedKinds.size/exerciseIds.length)*100);
   const kcal=completedWeek.reduce((n,record)=>n+record.kcal,0);
   // 今週の達成記録だけを使い、同じ日に複数回行っても継続日は1日として数えます。
   const activeDays=new Set(completedWeek.map(record=>new Date(record.completedAt).toDateString()));
@@ -18,8 +19,8 @@ export function RecordsScreen({records}:{records:RecordItem[]}){
 
   return <main className="screen records-screen">
     <header><span>あなたの積み重ね</span><h1>記録</h1></header>
-    <section className="week-card"><div className="small-ring" style={{'--progress':rate*3.6+'deg'} as CSSProperties}><strong>{rate}%</strong></div><div><span>今週の達成率</span><strong>{completedWeek.length} / 5 回</strong></div></section>
-    <section className="summary"><div><Trophy/><span>達成回数</span><strong>{completedWeek.length}回</strong></div><div><Flame/><span>消費カロリー</span><strong>{kcal.toFixed(1)}kcal</strong></div></section>
+    <section className="week-card"><div className="small-ring" style={{'--progress':rate*3.6+'deg'} as CSSProperties}><strong>{rate}%</strong></div><div><span>18種類チャレンジ</span><strong>{completedKinds.size} / {exerciseIds.length} 種類</strong></div></section>
+    <section className="summary"><div><Trophy/><span>達成した種類</span><strong>{completedKinds.size}種類</strong></div><div><Flame/><span>今週の消費カロリー</span><strong>{kcal.toFixed(1)}kcal</strong></div></section>
     <h2>今週の活動サマリー</h2>
     <section className="activity-summary">
       <div><span>実施回数</span><strong>{completedWeek.length}回</strong></div>

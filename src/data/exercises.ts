@@ -27,8 +27,13 @@ export const normalizeExerciseId=(id:string)=>id==='radio'?'radio-1':id;
 export const exerciseIds=exercises.map(exercise=>exercise.id);
 export const byId=(id:string)=>exercises.find(x=>x.id===normalizeExerciseId(id))!;
 
+export const completedExerciseKinds=(records:RecordItem[])=>{
+  const completed=records.filter(record=>record.status==='completed');
+  return new Set(completed.map(record=>normalizeExerciseId(record.exerciseId)));
+};
+
 export const hasExecutedAllExercises=(records:RecordItem[])=>{
-  const executed=new Set(records.map(record=>normalizeExerciseId(record.exerciseId)));
+  const executed=completedExerciseKinds(records);
   return exerciseIds.every(id=>executed.has(id));
 };
 
