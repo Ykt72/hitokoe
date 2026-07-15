@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { RotateCcw, Trophy } from 'lucide-react';
 import { ExerciseCard } from '../components/ExerciseCard';
-import { propose } from '../data/exercises';
+import { proposalBlocklist, propose } from '../data/exercises';
 import type { Exercise, SetState, State } from '../types';
 
 export function HomeScreen({state,setState,go}:{state:State;setState:SetState;go:()=>void}){
-  const[items,setItems]=useState(()=>propose());
+  const[items,setItems]=useState(()=>propose(proposalBlocklist(state.proposedExerciseIds,state.records)));
   const[selected,setSelected]=useState<Exercise|null>(null);
   const[minutes,setMinutes]=useState(1);
   const[toast,setToast]=useState(false);
@@ -13,7 +13,7 @@ export function HomeScreen({state,setState,go}:{state:State;setState:SetState;go
   const rate=Math.min(100,today.length*34);
   const open=(exercise:Exercise)=>{setSelected(exercise);setMinutes(exercise.baseMinutes)};
   const refresh=()=>{
-    setItems(propose(items.map(x=>x.id)));
+    setItems(propose(proposalBlocklist([...state.proposedExerciseIds,...items.map(x=>x.id)],state.records)));
     setToast(true);
   };
   const begin=()=>{
@@ -28,6 +28,15 @@ export function HomeScreen({state,setState,go}:{state:State;setState:SetState;go
     const id=window.setTimeout(()=>setToast(false),2600);
     return()=>window.clearTimeout(id);
   },[toast]);
+
+  useEffect(()=>{
+    const ids=items.map(item=>item.id);
+    setState(s=>{
+      const next=Array.from(new Set([...s.proposedExerciseIds,...ids]));
+      if(next.length===s.proposedExerciseIds.length)return s;
+      return {...s,proposedExerciseIds:next};
+    });
+  },[items,setState]);
 
   return <>
     <main className="screen home-screen">
