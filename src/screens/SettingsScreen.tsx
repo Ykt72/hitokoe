@@ -1,5 +1,5 @@
 import { Info, Moon, Palette } from 'lucide-react';
-import type { BackgroundColor, BackgroundPattern, SetState, State } from '../types';
+import type { BackgroundColor, BackgroundPattern, BackgroundPatternColor, SetState, State } from '../types';
 
 const patternOptions:{id:BackgroundPattern;label:string;description:string}[]=[
   {id:'plain',label:'なし',description:'白を基調にしたシンプルな背景'},
@@ -8,11 +8,22 @@ const patternOptions:{id:BackgroundPattern;label:string;description:string}[]=[
   {id:'wave',label:'ウェーブ',description:'ゆるい波の図柄でやわらかく見せます'}
 ];
 
-const colorOptions:{id:BackgroundColor;label:string;description:string}[]=[
+const backgroundColorOptions:{id:BackgroundColor;label:string;description:string}[]=[
   {id:'white',label:'白',description:'すっきり見える標準の背景'},
   {id:'mint',label:'ミント',description:'緑になじむやさしい背景'},
   {id:'cream',label:'クリーム',description:'少しあたたかい印象の背景'},
   {id:'sky',label:'スカイ',description:'軽くさわやかな印象の背景'}
+];
+
+const patternColorOptions:{id:BackgroundPatternColor;label:string;description:string;group:'寒色'|'暖色'}[]=[
+  {id:'mint',label:'ミント',description:'やさしい緑',group:'寒色'},
+  {id:'sky',label:'スカイ',description:'淡い青',group:'寒色'},
+  {id:'lavender',label:'ラベンダー',description:'落ち着いた紫',group:'寒色'},
+  {id:'navy',label:'ネイビー',description:'深い青',group:'寒色'},
+  {id:'cream',label:'クリーム',description:'明るい黄',group:'暖色'},
+  {id:'peach',label:'ピーチ',description:'やわらかい桃',group:'暖色'},
+  {id:'coral',label:'コーラル',description:'元気な赤橙',group:'暖色'},
+  {id:'mocha',label:'モカ',description:'落ち着いた茶',group:'暖色'}
 ];
 
 export function SettingsScreen({state,setState}:{state:State;setState:SetState}){
@@ -41,7 +52,7 @@ export function SettingsScreen({state,setState}:{state:State;setState:SetState})
         </div>
       </div>
       <div className="background-options" aria-label="背景色">
-        {colorOptions.map(option=>
+        {backgroundColorOptions.map(option=>
           <button
             key={option.id}
             className={`background-option bg-preview-${option.id} ${state.backgroundColor===option.id?'active':''}`}
@@ -73,6 +84,28 @@ export function SettingsScreen({state,setState}:{state:State;setState:SetState})
             <span className="pattern-preview"/>
             <strong>{option.label}</strong>
             <small>{option.description}</small>
+          </button>
+        )}
+      </div>
+
+      <div className="setting-row pattern-setting">
+        <Palette/>
+        <div>
+          <strong>背景パターン色</strong>
+          <span>ドットや図柄に使う色を変更できます</span>
+        </div>
+      </div>
+      <div className="pattern-color-options" aria-label="背景パターン色">
+        {patternColorOptions.map(option=>
+          <button
+            key={option.id}
+            className={`pattern-color-option pattern-color-preview-${option.id} ${state.backgroundPatternColor===option.id?'active':''}`}
+            onClick={()=>setState(current=>({...current,backgroundPatternColor:option.id}))}
+            aria-label={`${option.label}に変更`}
+          >
+            <span className="pattern-color-preview"/>
+            <strong>{option.label}</strong>
+            <small>{option.group}・{option.description}</small>
           </button>
         )}
       </div>

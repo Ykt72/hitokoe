@@ -13,7 +13,8 @@ const preferredPort = Number(process.env.PORT || 4173);
 
 const backgroundPatterns = ['plain', 'dots', 'leaf', 'wave'];
 const backgroundColors = ['white', 'mint', 'cream', 'sky'];
-const defaultState = { records: [], timer: null, darkMode: false, backgroundPattern: 'plain', backgroundColor: 'white', proposedExerciseIds: [] };
+const backgroundPatternColors = ['mint', 'sky', 'lavender', 'navy', 'cream', 'peach', 'coral', 'mocha'];
+const defaultState = { records: [], timer: null, darkMode: false, backgroundPattern: 'plain', backgroundColor: 'white', backgroundPatternColor: 'mint', proposedExerciseIds: [] };
 const mime = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
@@ -45,8 +46,9 @@ async function writeState(state) {
   const darkMode = typeof state.darkMode === 'boolean' ? state.darkMode : false;
   const backgroundPattern = backgroundPatterns.includes(state.backgroundPattern) ? state.backgroundPattern : 'plain';
   const backgroundColor = backgroundColors.includes(state.backgroundColor) ? state.backgroundColor : 'white';
+  const backgroundPatternColor = backgroundPatternColors.includes(state.backgroundPatternColor) ? state.backgroundPatternColor : 'mint';
   const proposedExerciseIds = Array.isArray(state.proposedExerciseIds) ? state.proposedExerciseIds : [];
-  await writeFile(statePath, JSON.stringify({ records, timer: null, darkMode, backgroundPattern, backgroundColor, proposedExerciseIds }, null, 2));
+  await writeFile(statePath, JSON.stringify({ records, timer: null, darkMode, backgroundPattern, backgroundColor, backgroundPatternColor, proposedExerciseIds }, null, 2));
 }
 
 async function writeServerTag(port) {

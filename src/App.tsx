@@ -28,7 +28,7 @@ export function App(){
 
   const done=(record:RecordItem)=>{setCompleted(record);setScreen('complete')};
 
-  const stageClass=`stage ${state.darkMode?'dark-theme':''} pattern-${state.backgroundPattern} bg-${state.backgroundColor}`;
+  const stageClass=`stage ${state.darkMode?'dark-theme':''} pattern-${state.backgroundPattern} bg-${state.backgroundColor} pattern-color-${state.backgroundPatternColor}`;
 
   return <div className={stageClass}><div className="phone">
     {screen==='home'&&<HomeScreen state={state} setState={setState} go={()=>setScreen('timer')}/>}

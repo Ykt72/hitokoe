@@ -1,8 +1,9 @@
-import type { BackgroundColor, BackgroundPattern, RecordItem, State } from '../types';
+import type { BackgroundColor, BackgroundPattern, BackgroundPatternColor, RecordItem, State } from '../types';
 
 const KEY='hitokoe-state-v2';
 const backgroundPatterns:BackgroundPattern[]=['plain','dots','leaf','wave'];
 const backgroundColors:BackgroundColor[]=['white','mint','cream','sky'];
+const backgroundPatternColors:BackgroundPatternColor[]=['mint','sky','lavender','navy','cream','peach','coral','mocha'];
 
 const isBackgroundPattern=(value:unknown):value is BackgroundPattern=>
   backgroundPatterns.includes(value as BackgroundPattern);
@@ -10,12 +11,16 @@ const isBackgroundPattern=(value:unknown):value is BackgroundPattern=>
 const isBackgroundColor=(value:unknown):value is BackgroundColor=>
   backgroundColors.includes(value as BackgroundColor);
 
+const isBackgroundPatternColor=(value:unknown):value is BackgroundPatternColor=>
+  backgroundPatternColors.includes(value as BackgroundPatternColor);
+
 export const initialState:State={
   records:[],
   timer:null,
   darkMode:false,
   backgroundPattern:'plain',
   backgroundColor:'white',
+  backgroundPatternColor:'mint',
   proposedExerciseIds:[]
 };
 
@@ -32,6 +37,7 @@ function normalizeState(state:Partial<State>|null|undefined):State{
     darkMode:Boolean(source.darkMode),
     backgroundPattern:isBackgroundPattern(source.backgroundPattern)?source.backgroundPattern:'plain',
     backgroundColor:isBackgroundColor(source.backgroundColor)?source.backgroundColor:'white',
+    backgroundPatternColor:isBackgroundPatternColor(source.backgroundPatternColor)?source.backgroundPatternColor:'mint',
     proposedExerciseIds:source.proposedExerciseIds||[]
   };
 }
@@ -59,6 +65,7 @@ export function mergeStates(local:State, remote:State):State{
     darkMode:local.darkMode,
     backgroundPattern:local.backgroundPattern,
     backgroundColor:local.backgroundColor,
+    backgroundPatternColor:local.backgroundPatternColor,
     proposedExerciseIds:Array.from(new Set([...(remote.proposedExerciseIds||[]),...(local.proposedExerciseIds||[])]))
   };
 }
