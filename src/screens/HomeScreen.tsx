@@ -44,7 +44,15 @@ export function HomeScreen({state,setState,go}:{state:State;setState:SetState;go
       {toast&&<div className="toast">提案を更新しました</div>}
       <div className="home-date">{new Intl.DateTimeFormat('ja-JP',{month:'long',day:'numeric',weekday:'short'}).format(new Date())}</div>
       <h2>今日の運動</h2>
-      <section className="goal-card"><div className="trophy"><Trophy/></div><div><strong>18種類チャレンジ達成率</strong><div className="linear"><i style={{width:rate+'%'}}/></div><span>{completedKindCount} / {exerciseIds.length} 種類達成</span></div><b>{rate}%</b></section>
+      <section className="goal-card">
+        <div className="trophy"><Trophy/></div>
+        <div>
+          <strong>18種類チャレンジ達成率</strong>
+          <div className="linear"><i style={{width:rate+'%'}}/></div>
+          <span>{completedKindCount} / {exerciseIds.length} 種類完了</span>
+        </div>
+        <b>{rate}%</b>
+      </section>
       <div className="section-heading"><h2>今日おすすめの運動</h2><span>すぐに始められます</span></div>
       <section className="exercise-list">{items.map(exercise=><ExerciseCard key={exercise.id} exercise={exercise} start={open}/>)}</section>
       <button className="refresh" onClick={refresh}><RotateCcw/>提案を更新する</button>
