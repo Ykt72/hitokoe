@@ -702,13 +702,27 @@ button{cursor:pointer}
   }
   .screen{
     min-height:calc(100vh - 48px);
-    padding:34px 42px 118px;
+    padding:112px 42px 42px;
   }
   .bottom-nav{
+    top:24px;
+    bottom:auto;
     width:min(calc(100% - 48px),1080px);
-    height:78px;
+    height:72px;
     padding-bottom:0;
-    border-radius:0 0 18px 18px;
+    border-top:0;
+    border-bottom:1px solid var(--line-soft);
+    border-radius:18px 18px 0 0;
+  }
+  .bottom-nav button{
+    grid-auto-flow:column;
+    place-content:center;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+  }
+  .bottom-nav button svg{
+    width:20px;
   }
   .exercise-list{
     grid-template-columns:repeat(3,minmax(0,1fr));
