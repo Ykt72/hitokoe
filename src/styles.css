@@ -687,3 +687,74 @@ button{cursor:pointer}
   box-shadow:0 0 0 3px #173522;
 }
 .stage.dark-theme .pattern-color-preview{border-color:#53606d}
+
+@media(min-width:900px){
+  .stage{
+    align-items:stretch;
+    padding:24px;
+  }
+  .phone{
+    width:min(100%,1080px);
+    min-height:calc(100vh - 48px);
+    margin:0;
+    border-radius:18px;
+    overflow:clip;
+  }
+  .screen{
+    min-height:calc(100vh - 48px);
+    padding:34px 42px 118px;
+  }
+  .bottom-nav{
+    width:min(calc(100% - 48px),1080px);
+    height:78px;
+    padding-bottom:0;
+    border-radius:0 0 18px 18px;
+  }
+  .exercise-list{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    align-items:stretch;
+  }
+  .exercise-card{
+    grid-template-columns:104px 1fr;
+    min-height:152px;
+  }
+  .exercise-visual{
+    min-height:130px;
+  }
+  .exercise-info{
+    display:flex;
+    flex-direction:column;
+  }
+  .exercise-info button{
+    margin-top:auto;
+  }
+  .refresh{
+    max-width:420px;
+    margin:22px auto 0;
+  }
+  .records-screen .summary,
+  .records-screen .activity-summary{
+    grid-template-columns:repeat(3,1fr);
+  }
+  .record-list{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .timer-screen,
+  .complete-screen{
+    display:grid;
+    align-content:start;
+    justify-items:center;
+  }
+  .timer-screen .live-stats,
+  .timer-screen .timer-actions,
+  .timer-screen .guide,
+  .complete-screen .result-card,
+  .complete-screen .wide{
+    width:min(100%,520px);
+  }
+  .settings-screen .background-options,
+  .settings-screen .pattern-options,
+  .settings-screen .pattern-color-options{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+}
